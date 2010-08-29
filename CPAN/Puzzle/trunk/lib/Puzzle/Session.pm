@@ -3,7 +3,7 @@ package Puzzle::Session;
 
 use Params::Validate qw(:types);;
 
-use Apache::Cookie;
+use Apache2::Cookie;
 
 use base 'Class::Container';
 
@@ -55,7 +55,8 @@ sub load {
 	#my $dbh	= $self->container()->dbh;
 	my $dbcfg	= $self->container()->cfg->db;
   my $session_name  = "puzzle.$ENV{SERVER_NAME}";
-  my %c = Apache::Cookie->fetch;
+  my $r = $self->container->_mason->apache_req or die "Unable to get Apache request handler";
+  my %c = Apache2::Cookie->fetch($r);
   my $sid = exists $c{$session_name} ? $c{$session_name}->value : undef;
   # better using a dbh handle from DBIx::Class but how extract dbhandle from it?
   my %db_params = (
@@ -77,11 +78,11 @@ sub load {
     undef $sid;
     tie %{$self->{internal_session}}, 'Apache::Session::MySQL', $sid,\%db_params
   }
-  Apache::Cookie->new( $r,
+  Apache2::Cookie->new( $r,
                         name => $session_name,
                         value => $self->{internal_session}->{_session_id},
                         path => '/',
-                      )->bake unless (defined $sid);
+                      )->bake($r) unless (defined $sid);
 	# sync tied hash with object methods
 	$self->_hash2obj;
 	# call same funzion on contained objects

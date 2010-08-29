@@ -112,9 +112,7 @@ sub process_request{
 			body_attributes	=> $self->page->body_attributes,
 			title						=> $self->page->title
 		};
-		$args->{debug} = $self->_mason->comp('/comp/debug.mplcom',
-			$self->dbg->internal_objects_dump_for_html
-		) if ($self->cfg->debug);
+		$args->{debug} = $self->dbg->sprint if ($self->cfg->debug);
 		$self->tmpl->autoDeleteHeader(0);
 		$html = $self->tmpl->html($args,$self->cfg->base);
 	}
