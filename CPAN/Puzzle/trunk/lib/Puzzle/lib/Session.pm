@@ -2,23 +2,31 @@ package Puzzle::Session;
 
 
 use Params::Validate qw(:types);;
-
-use Apache2::Cookie;
-
 use base 'Class::Container';
 
+our $mod_version;
+
+eval { require Apache2::Cookie };
+$modperl_version = $@ ? undef : 2;
+unless ($modperl_version) {
+	eval {require Apache::Cookie };
+	$modperl_version = $@ ? undef : 1;
+}
+unless ($modperl_version) {
+	die 'Prerequisite Apache::Cookie or Apache2::Cookie not found';
+}
+
+
 BEGIN {
+	__PACKAGE__->valid_params(
+		user 		=> { isa 		=> 'Puzzle::Session::User' },
+		auth 		=> { isa 		=> 'Puzzle::Session::Auth' },
+	);
 
-__PACKAGE__->valid_params(
-	user 		=> { isa 		=> 'Puzzle::Session::User' },
-	auth 		=> { isa 		=> 'Puzzle::Session::Auth' },
-);
-
-__PACKAGE__->contained_objects (
-	user		=> 'Puzzle::Session::User',
-	auth		=> 'Puzzle::Session::Auth',
-);
-
+	__PACKAGE__->contained_objects (
+		user		=> 'Puzzle::Session::User',
+		auth		=> 'Puzzle::Session::Auth',
+	);
 }
 
 # all new valid_params are read&write methods
@@ -52,37 +60,44 @@ sub save {
 
 sub load {
 	my $self					= shift;
-	#my $dbh	= $self->container()->dbh;
 	my $dbcfg	= $self->container()->cfg->db;
-  my $session_name  = "puzzle.$ENV{SERVER_NAME}";
-  my $r = $self->container->_mason->apache_req or die "Unable to get Apache request handler";
-  my %c = Apache2::Cookie->fetch($r);
-  my $sid = exists $c{$session_name} ? $c{$session_name}->value : undef;
-  # better using a dbh handle from DBIx::Class but how extract dbhandle from it?
-  my %db_params = (
-	DataSource => 'dbi:mysql:' .  $dbcfg->{name},
-    UserName   => $dbcfg->{username},
-    Password   => $dbcfg->{password},
-    LockDataSource => 'dbi:mysql:' .  $dbcfg->{name},
-    LockUserName   => $dbcfg->{username},
-    LockPassword   => $dbcfg->{password},
-  );
-  # will get an existing session from a cookie, or create a new session
-  # and cookie if needed
-  eval {
-    tie %{$self->{internal_session}}, 'Apache::Session::MySQL',$sid,\%db_params;
-  };
-  if ($@) {
-    die $@ unless $@ =~ /Object does not exist/;
-    # L'id non esiste piu' nel database, creo un nuovo id;
-    undef $sid;
-    tie %{$self->{internal_session}}, 'Apache::Session::MySQL', $sid,\%db_params
-  }
-  Apache2::Cookie->new( $r,
-                        name => $session_name,
-                        value => $self->{internal_session}->{_session_id},
-                        path => '/',
-                      )->bake($r) unless (defined $sid);
+	my $session_name  = "puzzle.$ENV{SERVER_NAME}";
+	my $r = $self->container->_mason->apache_req or die "Unable to get Apache request handler";
+	my %c = $modperl_version == 2 ? Apache2::Cookie->fetch($r) : Apache::Cookie->fetch;
+	my $sid = exists $c{$session_name} ? $c{$session_name}->value : undef;
+	# better using a dbh handle from DBIx::Class but how extract dbhandle from it?
+	my %db_params = (
+		DataSource => 'dbi:mysql:' .  $dbcfg->{name},
+		UserName   => $dbcfg->{username},
+		Password   => $dbcfg->{password},
+		LockDataSource => 'dbi:mysql:' .  $dbcfg->{name},
+		LockUserName   => $dbcfg->{username},
+		LockPassword   => $dbcfg->{password},
+	);
+	# will get an existing session from a cookie, or create a new session
+	# and cookie if needed
+	eval {
+		tie %{$self->{internal_session}}, 'Apache::Session::MySQL',$sid,\%db_params;
+	};
+	if ($@) {
+		die $@ unless $@ =~ /Object does not exist/;
+		# L'id non esiste piu' nel database, creo un nuovo id;
+		undef $sid;
+		tie %{$self->{internal_session}}, 'Apache::Session::MySQL', $sid,\%db_params
+	}
+	if ($modperl_version == 2) {
+		Apache2::Cookie->new( 	$r,
+								name	=> $session_name,
+								value	=> $self->{internal_session}->{_session_id},
+								path	=> '/',
+							)->bake($r) unless (defined $sid);
+	} else {
+		Apache::Cookie->new( 	$r,
+								name	=> $session_name,
+								value	=> $self->{internal_session}->{_session_id},
+								path	=> '/',
+							)->bake unless (defined $sid);
+	}
 	# sync tied hash with object methods
 	$self->_hash2obj;
 	# call same funzion on contained objects
