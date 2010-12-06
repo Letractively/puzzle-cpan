@@ -1,5 +1,9 @@
 package Puzzle::Core;
 
+use 5.008008;
+use strict;
+use warnings;
+
 use YAML qw(LoadFile);
 use Puzzle::Config;
 use Puzzle::DBI;
