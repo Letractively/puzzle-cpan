@@ -23,8 +23,8 @@ BEGIN {
 		description   => { parse => 'string',  type => SCALAR, default => '' },
 		keywords      => { parse => 'string',  type => SCALAR, default => '' },
 		db			      => { parse => 'hash',  type => HASHREF},
-		traslation    => { parse => 'hash',  type => HASHREF},
-		page		  => { parse => 'hash',  type => HASHREF | UNDEF},
+		traslation    => { parse => 'hash',  type => HASHREF, optional => 1},
+		page		  => { parse => 'hash',  type => HASHREF | UNDEF, optional => 1},
 		mail		      => { parse => 'hash',  type => HASHREF},
 	);
 }

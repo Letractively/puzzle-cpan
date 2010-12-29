@@ -66,6 +66,8 @@ sub process {
 				$self->$_->process;
 			}
 		}
+	} else {
+		$self->center->{direct_output} = 1;
 	}
 }
 
