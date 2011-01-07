@@ -65,14 +65,9 @@ sub load {
 	my $r = $self->container->_mason->apache_req or die "Unable to get Apache request handler";
 	my %c = $modperl_version == 2 ? Apache2::Cookie->fetch($r) : Apache::Cookie->fetch;
 	my $sid = exists $c{$session_name} ? $c{$session_name}->value : undef;
-	# better using a dbh handle from DBIx::Class but how extract dbhandle from it?
 	my %db_params = (
-		DataSource => 'dbi:mysql:' .  $dbcfg->{name},
-		UserName   => $dbcfg->{username},
-		Password   => $dbcfg->{password},
-		LockDataSource => 'dbi:mysql:' .  $dbcfg->{name},
-		LockUserName   => $dbcfg->{username},
-		LockPassword   => $dbcfg->{password},
+		Handle		=> $self->container()->dbh->storage->dbh,
+		LockHandle	=> $self->container()->dbh->storage->dbh
 	);
 	# will get an existing session from a cookie, or create a new session
 	# and cookie if needed
