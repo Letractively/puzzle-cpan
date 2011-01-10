@@ -22,6 +22,8 @@ apt-get install libdbix-class-schema-loader-perl
 apt-get install libapache-dbi-perl
 - Install Apache::Session
 apt-get install libapache-session-perl
+- Install Perl database interface to the MySQL database
+apt-get install libdbd-mysql-perl
 - INSTALL I18N::AcceptLanguage
 apt-get install libi18n-acceptlanguage-perl
 - Install HTML::Template::Pro
@@ -30,4 +32,7 @@ apt-get install libhtml-template-pro-perl
 perl -MCPAN -e 'install HTML::Template::Pro::Extension'
 - Set correct permission to Mason Cache directory
 chown www-data:www-data  /var/cache/mason
+- Remember that your Apache must load apreq2 module or you got blanck pages
+  and Apache crash without log messages
+ls -al ls -al /etc/apache2/mods-enabled/apreq.load 
 

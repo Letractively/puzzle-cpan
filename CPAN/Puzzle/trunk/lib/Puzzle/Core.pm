@@ -85,9 +85,10 @@ sub _autohandler_once {
 	my $self	= shift;
 	$Apache::Session::Store::DBI::TableName = $self->cfg->db->{session_table};
 	$Apache::Request::Redirect::LOG = 0;
-	$self->{dbh} 	||= new Puzzle::DBI('dbi:mysql:' .
-		$self->cfg->db->{name},$self->cfg->db->{username},$self->cfg->db->{password});
-	#$self->dbh->do("SET NAMES 'latin1'") if (substr($self->dbh->get_info(  18 ),0,3)>4) ;
+	my $dbi = 'dbi:mysql:database=' . $self->cfg->db->{name} . 
+		';host=' . $self->cfg->db->{host};
+	$self->{dbh} 	||= new Puzzle::DBI($dbi,$self->cfg->db->{username},
+		$self->cfg->db->{password});
 }
 
 sub process_request{
