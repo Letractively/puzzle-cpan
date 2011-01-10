@@ -17,6 +17,10 @@ my %prereq = (
 				'Time::HiRes'						=> 0,
 				'HTML::Entities'					=> 0,
 				'File::Spec'						=> 0,
+				'DBIx::Class::Schema'		=> 0,
+				'Apache::DBI'						=> 0,
+				'Apache::Session::MySQL'=> 0,
+				'I18N::AcceptLanguage'	=> 0,
 );
 
 my $mod_version;

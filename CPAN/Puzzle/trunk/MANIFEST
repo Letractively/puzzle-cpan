@@ -2,6 +2,7 @@ Changes
 Makefile.PL
 MANIFEST
 README
+INSTALL
 t/Puzzle.t
 lib/Puzzle/Args.pm   
 lib/Puzzle/Config.pm  
@@ -9,6 +10,7 @@ lib/Puzzle/DBI.pm
 lib/Puzzle/Debug.pm  
 lib/Puzzle/Loader.pm  
 lib/Puzzle/Post.pm    
+lib/Puzzle/MasonHandler.pm
 lib/Puzzle/Sendmail.pm  
 lib/Puzzle/Session.pm   
 lib/Puzzle/Utility.pm
