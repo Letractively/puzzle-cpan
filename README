@@ -25,7 +25,26 @@ DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  blah blah blah
+  apache2 + apxs2
+  mysql
+  mod_perl2
+  YAML
+  HTML::Mason
+  Params::Validate
+  Class::Container
+  Mail::Sendmail
+  Data::Dumper
+  JSON::Any
+  XML::Simple
+  HTML::Template::Pro::Extension
+  Time::HiRes
+  HTML::Entities
+  File::Spec
+  DBIx::Class::Schema
+  DBIx::Class::Schema::Loader
+  Apache::DBI
+  Apache::Session::MySQL
+  I18N::AcceptLanguage
 
 COPYRIGHT AND LICENCE
 
