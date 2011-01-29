@@ -18,6 +18,7 @@ my %prereq = (
 				'HTML::Entities'					=> 0,
 				'File::Spec'						=> 0,
 				'DBIx::Class::Schema'		=> 0,
+				'DBIx::Class::Schema::Loader'		=> 0,
 				'Apache::DBI'						=> 0,
 				'Apache::Session::MySQL'=> 0,
 				'I18N::AcceptLanguage'	=> 0,
