@@ -6,6 +6,14 @@ This document describes steps to install this module on a Debian distribution
 
 = Installation Steps =
 
+== Prerequisites ==
+
+apt-get install build-essential
+apt-get install apache2
+apt-get install apache2-threaded-dev
+apt-get install libapache2-mod-perl2-dev
+apt-get install mysql-server
+
 == Install Modules==
 
 ===Install HTML::Mason===
