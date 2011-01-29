@@ -1,4 +1,6 @@
 package Puzzle::Utility;
+
+our $VERSION = '0.02';
               
 use Exporter; 
 use strict;   

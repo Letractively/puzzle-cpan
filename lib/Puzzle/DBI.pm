@@ -1,14 +1,10 @@
 package Puzzle::DBI;
 
-use vars '$VERSION';
+our $VERSION = '0.02';
 
 use base 'DBIx::Class::Schema';
 
 use Puzzle::Loader;
-
-
-
-our $VERSION = '0.01';
 
 sub new {
     my $proto   = shift;

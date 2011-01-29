@@ -1,5 +1,7 @@
 package Puzzle::Debug;
 
+our $VERSION = '0.02';
+
 use base 'Class::Container';
 
 use Data::Dumper;
