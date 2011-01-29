@@ -18,6 +18,8 @@ $smail = new ECP::Sendmail::MultiPartItem ( db=>$db );
 
 package Puzzle::Sendmail::MultiPartItem;
 
+our $VERSION = '0.02';
+
 use MIME::QuotedPrint;
 
 use Params::Validate qw(:types);

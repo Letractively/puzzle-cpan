@@ -1,5 +1,7 @@
 package Puzzle::DBIx::sysMetaschema;
 
+our $VERSION = '0.02';
+
 use base qw(Puzzle::DBI);
 
 __PACKAGE__->table('sysMetaschema');

@@ -23,6 +23,8 @@ $smail->send();
 
 package Puzzle::Sendmail;
 
+our $VERSION = '0.02';
+
 use Params::Validate qw(:types);
 use base 'Class::Container';
 

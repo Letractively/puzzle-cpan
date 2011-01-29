@@ -1,5 +1,7 @@
 package Puzzle::Template;
 
+our $VERSION = '0.02';
+
 use HTML::Template::Pro::Extension;
 use File::Spec;
 

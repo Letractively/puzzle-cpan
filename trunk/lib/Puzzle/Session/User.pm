@@ -1,5 +1,7 @@
 package Puzzle::Session::User;
 
+our $VERSION = '0.02';
+
 use Puzzle::Utility;
 
 use Params::Validate qw(:types);;

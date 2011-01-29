@@ -1,5 +1,7 @@
 package Puzzle::MasonHandler;
 
+our $VERSION = '0.02';
+
 use HTML::Mason::ApacheHandler();
 
 use strict;

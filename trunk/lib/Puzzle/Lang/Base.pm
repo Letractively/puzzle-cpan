@@ -1,5 +1,7 @@
 package Puzzle::Lang::Base;
 
+our $VERSION = '0.02';
+
 use strict;
 use warnings;
 

@@ -1,5 +1,7 @@
 package Puzzle::Config;
 
+our $VERSION = '0.02';
+
 
 use Params::Validate qw(:types);;
 

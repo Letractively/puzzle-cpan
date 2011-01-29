@@ -1,5 +1,7 @@
 package Puzzle::Lang::Manager;
 
+our $VERSION = '0.02';
+
 use strict;
 no strict 'refs';
 use warnings;

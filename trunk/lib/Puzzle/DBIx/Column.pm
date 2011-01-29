@@ -1,5 +1,8 @@
 package Puzzle::DBIx::Column;
 
+
+our $VERSION = '0.02';
+
 use base 'Class::DBI::Column';
 use Puzzle::DBIx::sysMetaschema;
 
