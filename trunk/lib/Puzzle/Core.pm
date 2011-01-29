@@ -148,49 +148,104 @@ __END__
 
 =head1 NAME
 
-Puzzle - Perl extension for blah blah blah
+Puzzle - A Web framework 
 
 =head1 SYNOPSIS
 
-  use Puzzle;
-  blah blah blah
+In httpd.conf or virtual host configuration file
+
+  <IfModule mod_perl.c>
+    AddType text/html .mpl
+    PerlSetVar ServerName "myservername"
+    <FilesMatch "\.mpl$">
+      SetHandler  perl-script
+      PerlHandler Puzzle::MasonHandler
+    </FilesMatch>
+    <LocationMatch "(\.mplcom|handler|\.htt)$|autohandler">
+      SetHandler  perl-script
+      PerlInitHandler Apache2::Const::NOT_FOUND
+    </LocationMatch>
+  </IfModule>
+
+in your document root, a config.yaml like this
+
+  base:         ~
+  frame_bottom: ~
+  frame_left:   ~
+  frame_right:  ~
+  frame_top:    ~
+  # you MUST CHANGE auth component because this is a trivial auth controller
+  # auth_class:   "Puzzle::Session::Auth"
+  # auth_class:   "YourNameSpace::Auth"
+  gids:
+                - everybody
+  login:        /login.mpl
+  namespace:    cov
+  description:  ""
+  keywords:     ""
+  debug:        1
+  cache:        0
+  db:
+    username:               your_username
+    password:               your_password
+    host:                   your_hosts
+    name:                   your_db_name
+    session_table:          sysSessions
+    persistent_connection:  0
+  #traslation:
+  #it:           "YourNameSpace::Lang::it"
+  #default:      it
+  mail:
+    server:       "your.mail.server"
+    from:         "your@email-address"
+
+in your document root, a Mason autohandler file like this
+
+  <%once>
+    use Puzzle::Core;
+    use abc;
+  </%once>
+  <%init>
+    $abc::puzzle ||= new Puzzle::Core(cfg_path => $m->interp->comp_root
+	  .  '/config.yaml';
+    $abc::dbh = $abc::puzzle->dbh;
+    $abc::puzzle->process_request;
+  </%init>
+
+an abc module in your @ISA path
+
+  package abc;
+
+  our $puzzle;
+  our $dbh;
+
+  1;
+
+
 
 =head1 DESCRIPTION
 
-Stub documentation for Puzzle, created by h2xs. It looks like the
-author of the extension was negligent enough to leave the stub
-unedited.
-
-Blah blah blah.
-
-=head2 EXPORT
-
-None by default.
-
-
+Puzzle is a web framework based on HTML::Mason, HTML::Template::Pro with
+direct support to dabatase connection via DBIx::Class. It include a
+template system, a session user tracking and a simple authentication and
+authorization login access for users with groups and privileges.
 
 =head1 SEE ALSO
 
-Mention other useful documentation such as the documentation of
-related modules or operating system documentation (such as man pages
-in UNIX), or any relevant external documentation such as RFCs or
-standards.
+For update information and more help about this framework take a look to:
 
-If you have a mailing list set up for your module, mention it here.
-
-If you have a web site set up for your module, mention it here.
+http://code.google.com/p/puzzle-cpan/
 
 =head1 AUTHOR
 
-A. U. Thor, E<lt>root@slackware.lanE<gt>
+Emiliano Bruni, E<lt>info@ebruni.it<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2010 by A. U. Thor
+Copyright (C) 2010 by Emiliano Bruni
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.8 or,
 at your option, any later version of Perl 5 you may have available.
-
 
 =cut

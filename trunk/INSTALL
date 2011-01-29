@@ -4,6 +4,18 @@ INSTALL file for PUZZLE module
 How to install PUZZLE on a Debian with apache2
 ==============================================
 
+Prerequisites
+-------------
+
+apt-get install build-essential
+apt-get install apache2
+apt-get install apache2-threaded-dev
+apt-get install libapache2-mod-perl2-dev
+apt-get install mysql-server
+
+Install Modules
+---------------
+
 - Install HTML::Mason 
 apt-get install libhtml-mason-perl
 
