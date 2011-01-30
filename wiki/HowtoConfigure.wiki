@@ -136,3 +136,120 @@ echo -e "package rmw;\n\nour \$puzzle;\nour \$dbh;\n\n1;" > rmw.pm
 Reload your website and nothing changes apparently but if you take a look in sysSession table you'll see a new record. It's your session.
 
 =Do something more funny=
+
+Now it's time to do something more funny with our module. Now we'll see how to
+create, using Puzzle, a pseudo-frame website i.e. something like this
+
+------------------------
+| Header               |
+------------------------
+| Current page         |
+------------------------
+| Footer               |
+------------------------
+
+where header and footer is almost static during the navigation while current page
+are pages of our website. We'll see also how to add a usefull debug window in
+how html page for debug your web application.
+
+First of all, enable frames in Puzzle framework and set base, header (top) and
+footer (bottom) template by modifying first rows in config.yaml
+
+{{{
+frames:            1
+base:              base.htt
+frame_top_file:    top.htt
+frame_right_file:  ~
+frame_bottom_file: bottom.htt
+frame_left_file:   ~
+}}}
+
+create a simple base template
+
+{{{
+base.htt
+
+<html>
+<head>
+<tmpl_var name="header_client"></tmpl_var>
+<tmpl_if name="debug">
+        <link rel="stylesheet" type="text/css"  href="/js/debug.css">
+        <script type="text/javascript" src="/js/debug.js"></script>
+</tmpl_if>
+<style>
+#frame_top              {background-color: #6AD96A }
+#frame_center   {background-color: #F2C676 }
+#frame_bottom   {background-color: #C291D6 }
+#frame_debug    {margin-top: 40px }
+</style>
+<title>Your Site Name &raquo; %title%</title>
+</head>
+<body %body_attributes%>
+<div id="frame_top">%frame_top%</div>
+<div id="frame_center">%frame_center%</div>
+<div id="frame_bottom">%frame_bottom%</div>
+<div id="frame_debug">%frame_debug%</div>
+</body>
+</html>
+}}}
+
+a header 
+
+{{{
+top.htt
+
+<html>
+<head>
+</head>
+<body>
+<h1>Your Site Name &raquo; %title%</h1>
+</body>
+</html>
+}}}
+
+a footer 
+
+{{{
+<html>
+<head>
+</head>
+<body>
+<hr>
+<div>Copyright 2011 - Your Web Site</div>
+</body>
+</html>
+}}}
+
+and two crosslinked page
+
+{{{
+index.htm
+
+<html>
+<head>
+<title>Home Page</title>
+</head>
+<body>
+<a href="another_page.htm">Go to another page</a>
+</body>
+</html>
+}}}
+
+and another page
+
+{{{
+another_page.htm
+
+<html>
+<head>
+<title>Another Page</title>
+</head>
+<body>
+<a href="index.htm">Back home</a>
+</body>
+</html>
+}}}
+
+and see the result. Sound Good?
+
+
