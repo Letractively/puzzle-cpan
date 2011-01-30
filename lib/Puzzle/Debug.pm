@@ -66,10 +66,13 @@ sub all_mason_args {
 	# ritorna tutti i parametri globali
 	# alcuni normalizzati
 	my $self	= shift;
-	return { %{$self->container->cfg->as_hashref}, 
-		%{&_normalize_for_tmpl(&_normalize_for_tmpl(&_normalize_for_tmpl($self->container->session->internal_session)))},
-	  %{&_normalize_for_tmpl($self->container->post->args)},
-		%{&_normalize_for_tmpl($self->container->args->args)}
+	my $puzzle	= $self->container;
+	return { 
+			%{$puzzle->cfg->as_hashref}, 
+			%{&_normalize_for_tmpl(&_normalize_for_tmpl(&_normalize_for_tmpl($puzzle->session->internal_session)))},
+	  		%{&_normalize_for_tmpl($puzzle->post->args)},
+			%{&_normalize_for_tmpl($puzzle->args->args)}, 
+			title => $puzzle->page->title,
 	};
 }
 
