@@ -10,10 +10,9 @@ use base 'Class::Container';
 BEGIN {
 
 	__PACKAGE__->valid_params(
-		cornice       => { parse => 'boolean', default => 0, type => BOOLEAN},
 		debug		      => { parse => 'boolean', default => 0, type => BOOLEAN},
 		cache		      => { parse => 'boolean', default => 0, type => BOOLEAN},
-		cornice       => { parse => 'boolean', default => 0, type => BOOLEAN},
+		frames       => { parse => 'boolean', default => 0, type => BOOLEAN},
 		frame_top_file     => { parse => 'string',  type => SCALAR | UNDEF, default => undef },
 		frame_left_file    => { parse => 'string',  type => SCALAR | UNDEF, default => undef },
 		frame_right_file   => { parse => 'string',  type => SCALAR | UNDEF, default => undef },

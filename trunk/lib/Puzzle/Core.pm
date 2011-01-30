@@ -54,7 +54,7 @@ sub new {
 	# append parameters required for new contained objects loading them
 	# from YAML config file
 	my $cfgH		= LoadFile($_[1]);
-	my @params	= qw(cornice base frame_bottom_file frame_left_file frame_top_file
+	my @params	= qw(frames base frame_bottom_file frame_left_file frame_top_file
 										frame_right_file gids login description keywords db
 										namespace debug cache auth_class traslation mail page);
 	foreach (@params){
@@ -169,7 +169,7 @@ In httpd.conf or virtual host configuration file
 
 in your document root, a config.yaml like this
 
-  cornice:           0
+  frames:           0
   base:              ~
   frame_bottom_file: ~
   frame_left_file:   ~
