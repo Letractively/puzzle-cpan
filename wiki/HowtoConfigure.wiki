@@ -62,4 +62,21 @@ echo "Hello World" > /www/rmw.ebruni.it/www/index.mpl
 
 Open browser to http://rmw.ebruni.it/ and it should work.
 
+== Database configuration ==
+{{{
+mysqladmin -p create rmw
+}}}
+{{{
+echo "CREATE TABLE IF NOT EXISTS \`sysSessions\` ( \
+  \`id\` varchar(32) character set latin1 collate latin1_bin NOT NULL, \
+  \`a_session\` text character set latin1 collate latin1_bin, \
+  \`ts\` timestamp NOT NULL default CURRENT_TIMESTAMP, \
+  PRIMARY KEY  (\`id\`) \
+) " | mysql -p rmw
+}}}
+{{{
+echo "GRANT ALL PRIVILEGES ON rmw.* TO  \
+ 'rmw'@'localhost' IDENTIFIED BY 'YOUR_PASSWORD'" | mysql -p rmw
+}}}
+
 == Apply Puzzle Configuration ==
