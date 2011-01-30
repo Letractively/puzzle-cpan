@@ -6,6 +6,7 @@ Revision history for Perl extension Puzzle.
 	- BREAK COMPATIBILITY. Now, in your template, if you want debug 
 		debug information, you need to add "%frame_debug%" instead of
 		"%debug%"
+	- Add a sample folder with examples css and js for debug frame layout.
 
 0.02  Sat Jan 29 20:47:11 CET 2011
  	- first public distribution.
