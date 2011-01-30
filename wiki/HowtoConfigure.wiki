@@ -14,7 +14,7 @@ A /www folder for all you virtual hosts
 == Create a Virtual Host ==
 
 {{{
-mkdir rmweb.ebruni.it
+mkdir rmw.ebruni.it
 mkdir logs
 mkdir www
 mkdir lib
@@ -57,7 +57,7 @@ ln -s /www/rmw.ebruni.it/conf/httpd.conf /etc/apache2/sites-enabled/rmw.ebruni.i
 }}}
 
 {{{
-echo "Hello World" > /www/rmw.ebruni.it/www/index.mpl
+echo "Hello World" > /www/rmw.ebruni.it/www/index.htm
 }}}
 
 Open browser to http://rmw.ebruni.it/ and it should work.
@@ -85,20 +85,20 @@ echo "GRANT ALL PRIVILEGES ON rmw.* TO  \
 cd /www/rmw.ebruni.it/www
 
 cat > config.yaml <<EOF
-cornice:      0
-base:         ~
-frame_bottom: ~
-frame_left:   ~
-frame_right:  ~
-frame_top:    ~
+frames:            0
+base:              ~
+frame_bottom_file: ~
+frame_left_file:   ~
+frame_right_file:  ~
+frame_top_file:    ~
 gids:          
-              - everybody
-login:        /login.mpl
-namespace:    rmw
-description:  ""
-keywords:     ""
-debug:        1
-cache:        0
+                   - everybody
+login:             /login.mpl
+namespace:         rmw
+description:       ""
+keywords:          ""
+debug:             1
+cache:             0
 db:
   username:               rmw
   password:               YOUR_PASSWORD
@@ -134,3 +134,5 @@ echo -e "package rmw;\n\nour \$puzzle;\nour \$dbh;\n\n1;" > rmw.pm
 }}}
 
 Reload your website and nothing changes apparently but if you take a look in sysSession table you'll see a new record. It's your session.
+
+=Do something more funny=
