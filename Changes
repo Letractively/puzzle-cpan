@@ -10,8 +10,11 @@ Revision history for Perl extension Puzzle.
 	- Add module dump in debug module
 	- Now all frames have visibility of the title of the center page.
 	- BREAK COMPATIBILITY. The config parameters for frames template path 
-	  has now called frame_top_file, frame_right_file and so on.
+	  	has now called frame_top_file, frame_right_file and so on.
 	- Now base template has visibility on all framework template parameters.
+	- BREAK COMPATIBILITY. Change the parameter name in config.yaml to set a 
+		pseudoframes website or not. Name changes from italian "cornice" into
+		"frames".
 
 0.02  Sat Jan 29 20:47:11 CET 2011
  	- first public distribution.
