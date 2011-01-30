@@ -1,5 +1,9 @@
 Revision history for Perl extension Puzzle.
 
+0.03
+    - BREAK COMPATIBILITY. Now, in your template, the content of the loaded
+		page must be called "%frame_center%" where you have "%body%"
+
 0.02  Sat Jan 29 20:47:11 CET 2011
  	- first public distribution.
 

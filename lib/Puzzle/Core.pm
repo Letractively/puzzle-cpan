@@ -1,6 +1,6 @@
 package Puzzle::Core;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use 5.008008;
 use strict;
@@ -112,12 +112,12 @@ sub process_request{
 		my $args = {
 			frame_bottom		=> $self->page->bottom->body,
 			frame_left			=> $self->page->left->body,
-			frame_top				=> $self->page->top->body,
+			frame_top			=> $self->page->top->body,
 			frame_right			=> $self->page->right->body,
-			body						=> $self->page->body,
+			frame_center		=> $self->page->body,
 			header_client		=> $self->page->headers,
-			body_attributes	=> $self->page->body_attributes,
-			title						=> $self->page->title
+			body_attributes		=> $self->page->body_attributes,
+			title				=> $self->page->title
 		};
 		$args->{debug} = $self->dbg->sprint if ($self->cfg->debug);
 		$self->tmpl->autoDeleteHeader(0);
@@ -163,7 +163,7 @@ In httpd.conf or virtual host configuration file
     </FilesMatch>
     <LocationMatch "(\.mplcom|handler|\.htt)$|autohandler">
       SetHandler  perl-script
-      PerlInitHandler Apache2::Const::NOT_FOUND
+      PerlInitHandler Apache2::Const::HTTP_NOT_FOUND
     </LocationMatch>
   </IfModule>
 
