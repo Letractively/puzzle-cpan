@@ -1,0 +1,65 @@
+#summary Guide to configure Puzzle
+
+= Introduction =
+
+Step by step guide to configure an apache virtual host with Puzzle.
+
+
+= Prerequisites =
+
+A /www folder for all you virtual hosts
+
+= Step by Step=
+
+== Create a Virtual Host ==
+
+{{{
+mkdir rmweb.ebruni.it
+mkdir logs
+mkdir www
+mkdir lib
+mkdir conf
+}}}
+{{{
+cd conf/
+cat > httpd.conf <<EOF
+<VirtualHost rmw.ebruni.it:80>
+        DocumentRoot "/www/rmw.ebruni.it/www"
+        ServerName rmw.ebruni.it
+        ServerAdmin info@ebruni.it
+        DirectoryIndex index.mpl index.htm
+        ErrorLog /www/rmw.ebruni.it/logs/error_log
+        CustomLog /www/rmw.ebruni.it/logs/access_log_cmb combined
+        <IfModule mod_perl.c>
+                AddType text/html .mpl
+                PerlSetVar ServerName "rmw.ebruni.it"
+                PerlSetVar MasonErrorMode output 
+                PerlSetVar MasonStaticSource 0
+                <Perl>
+                        use lib '/var/www/rmw.ebruni.it/lib';
+                </Perl>
+                <FilesMatch "\.(htm|mpl|pl)$">
+                        SetHandler  perl-script
+                        PerlHandler Puzzle::MasonHandler
+                </FilesMatch>
+                <LocationMatch "(\.mplcom|handler|\.htt)$|autohandler">
+                        SetHandler  perl-script
+                        PerlInitHandler Apache2::Const::HTTP_NOT_FOUND
+      </LocationMatch>
+        </IfModule>
+</VirtualHost>
+EOF
+}}}
+{{{
+mkdir /var/cache/mason/
+ln -s /www/rmw.ebruni.it/conf/httpd.conf /etc/apache2/sites-enabled/rmw.ebruni.it.conf
+/etc/init.d/apache2 restart
+}}}
+
+{{{
+echo "Hello World" > /www/rmw.ebruni.it/www/index.mpl
+}}}
+
+Open browser to http://rmw.ebruni.it/ and it should work.
+
+== Apply Puzzle Configuration ==
