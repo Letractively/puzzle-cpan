@@ -57,7 +57,8 @@ sub internal_objects_dump_for_html {
     push @{$debug{"debug_cache"}},
       {key => $_, value => &ParseDateString("epoch " .
         $self->container->_mason->cache(namespace=>$self->container->cfg->namespace)->get_object($_)->get_expires_at())};
-  }
+  }	
+	$debug{'puzzle_dump'} = $to_dump->(Data::Dumper::Dumper($self->container));
   return %debug
 }
 
