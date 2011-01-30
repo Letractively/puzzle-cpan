@@ -80,3 +80,49 @@ echo "GRANT ALL PRIVILEGES ON rmw.* TO  \
 }}}
 
 == Apply Puzzle Configuration ==
+
+{{{
+cd /www/rmw.ebruni.it/www
+
+cat > config.yaml <<EOF
+cornice:      0
+base:         ~
+frame_bottom: ~
+frame_left:   ~
+frame_right:  ~
+frame_top:    ~
+gids:          
+              - everybody
+login:        /login.mpl
+namespace:    rmw
+description:  ""
+keywords:     ""
+debug:        1
+cache:        0
+db:
+  username:               rmw
+  password:               YOUR_PASSWORD
+  host:                   localhost
+  name:                   rmw
+  session_table:          sysSessions
+  persistent_connection:  0
+mail:
+  server:       "YOUR.SMTP.SERVER"
+  from:         "YOUR@EMAIL.COM"
+EOF
+}}}
+
+cat > autohandler <<EOF
+<%once>
+\tuse Puzzle::Core;
+ \tuse rmw;
+</%once>
+
+<%init>
+\t\$rmw::puzzle ||= new Puzzle::Core(cfg_path => \$m->interp->comp_root
+\t\t.  '/config.yaml');
+\t\$rmw::dbh = \$rmw::puzzle->dbh;
+\t\$rmw::puzzle->process_request;
+\t\$rmw::puzzle->dbh->storage->disconnect;
+</%init>
+EOF
