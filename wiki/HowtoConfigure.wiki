@@ -112,17 +112,18 @@ mail:
 EOF
 }}}
 
-cat > autohandler <<EOF
-<%once>
-\tuse Puzzle::Core;
- \tuse rmw;
-</%once>
-
-<%init>
-\t\$rmw::puzzle ||= new Puzzle::Core(cfg_path => \$m->interp->comp_root
-\t\t.  '/config.yaml');
-\t\$rmw::dbh = \$rmw::puzzle->dbh;
-\t\$rmw::puzzle->process_request;
-\t\$rmw::puzzle->dbh->storage->disconnect;
-</%init>
-EOF
+{{{
+echo -e -n "\
+<%once>\n\
+\tuse Puzzle::Core;\n\
+\tuse rmw;\n\
+</%once>\n\
+\n\
+<%init>\n\
+\t\$rmw::puzzle ||= new Puzzle::Core(cfg_path => \$m->interp->comp_root\n\
+\t\t.  '/config.yaml');\n\
+\t\$rmw::dbh = \$rmw::puzzle->dbh;\n\
+\t\$rmw::puzzle->process_request;\n\
+\t\$rmw::puzzle->dbh->storage->disconnect;\n\
+</%init>" > autohandler
+}}}
