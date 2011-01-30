@@ -113,7 +113,7 @@ EOF
 }}}
 
 {{{
-echo -e -n "\
+echo -e "\
 <%once>\n\
 \tuse Puzzle::Core;\n\
 \tuse rmw;\n\
@@ -127,3 +127,10 @@ echo -e -n "\
 \t\$rmw::puzzle->dbh->storage->disconnect;\n\
 </%init>" > autohandler
 }}}
+{{{
+cd ../lib
+
+echo -e "package rmw;\n\nour \$puzzle;\nour \$dbh;\n\n1;" > rmw.pm
+}}}
+
+Reload your website and nothing changes apparently but if you take a look in sysSession table you'll see a new record. It's your session.
