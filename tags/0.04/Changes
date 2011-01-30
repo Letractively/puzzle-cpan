@@ -1,0 +1,31 @@
+Revision history for Perl extension Puzzle.
+
+0.04  Mon Jan 31 00:35:12 CET 2011
+	- When uploaded previous version to CPAN we found that CPAN found a conflict
+		in local package HTML::Mason::Cammands. To avoid we create a simple 
+		replacement to HTML::Mason::Request and use this as local package in
+		Puzzle::MasonHandler
+
+0.03  Sun Jan 30 23:38:10 CET 2011
+    - BREAK COMPATIBILITY. Now, in your template, the content of the loaded
+		page must be called "%frame_center%" where you have "%body%"
+	- BREAK COMPATIBILITY. Now, in your template, if you want debug 
+		debug information, you need to add "%frame_debug%" instead of
+		"%debug%"
+	- Add a sample folder with examples css and js for debug frame layout.
+	- Add module dump in debug module
+	- Now all frames have visibility of the title of the center page.
+	- BREAK COMPATIBILITY. The config parameters for frames template path 
+	  	has now called frame_top_file, frame_right_file and so on.
+	- Now base template has visibility on all framework template parameters.
+	- BREAK COMPATIBILITY. Change the parameter name in config.yaml to set a 
+		pseudoframes website or not. Name changes from italian "cornice" into
+		"frames".
+
+0.02  Sat Jan 29 20:47:11 CET 2011
+ 	- first public distribution.
+
+0.01  Mon Dec  6 11:42:05 2010
+	- original version; created by h2xs 1.23 with options
+		-AXc -n Puzzle
+
