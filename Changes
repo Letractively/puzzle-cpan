@@ -8,7 +8,10 @@ Revision history for Perl extension Puzzle.
 		"%debug%"
 	- Add a sample folder with examples css and js for debug frame layout.
 	- Add module dump in debug module
-	- Now all frames had visibility of the title of the center page.
+	- Now all frames have visibility of the title of the center page.
+	- BREAK COMPATIBILITY. The config parameters for frames template path 
+	  has now called frame_top_file, frame_right_file and so on.
+	- Now base template has visibility on all framework template parameters.
 
 0.02  Sat Jan 29 20:47:11 CET 2011
  	- first public distribution.

@@ -54,8 +54,8 @@ sub new {
 	# append parameters required for new contained objects loading them
 	# from YAML config file
 	my $cfgH		= LoadFile($_[1]);
-	my @params	= qw(cornice base frame_bottom frame_left frame_top
-										frame_right gids login description keywords db
+	my @params	= qw(cornice base frame_bottom_file frame_left_file frame_top_file
+										frame_right_file gids login description keywords db
 										namespace debug cache auth_class traslation mail page);
 	foreach (@params){
 		push @_, ($_, $cfgH->{$_}) if (exists $cfgH->{$_});
@@ -117,7 +117,7 @@ sub process_request{
 			frame_center		=> $self->page->body,
 			header_client		=> $self->page->headers,
 			body_attributes		=> $self->page->body_attributes,
-			title				=> $self->page->title
+			%{$self->dbg->all_mason_args},
 		};
 		$args->{frame_debug} = $self->dbg->sprint if ($self->cfg->debug);
 		$self->tmpl->autoDeleteHeader(0);
@@ -169,11 +169,12 @@ In httpd.conf or virtual host configuration file
 
 in your document root, a config.yaml like this
 
-  base:         ~
-  frame_bottom: ~
-  frame_left:   ~
-  frame_right:  ~
-  frame_top:    ~
+  cornice:           0
+  base:              ~
+  frame_bottom_file: ~
+  frame_left_file:   ~
+  frame_right_file:  ~
+  frame_top_file:    ~
   # you MUST CHANGE auth component because this is a trivial auth controller
   # auth_class:   "Puzzle::Session::Auth"
   # auth_class:   "YourNameSpace::Auth"
