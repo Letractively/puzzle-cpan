@@ -10,6 +10,14 @@ session and pseudo-frames support.
 
 A /www folder for all you virtual hosts
 
+= Configure using puzzle_setup.pl script =
+
+Steps "Create a Virtual Host" and "Apply Puzzle Configuration" can be jumped if you
+use puzzle_setup.pl script in mics/setup distribution directory that automatically
+create a virtual host and apply puzzle configuration.
+
+Usage: `./puzzle_setup.pl www.yourwebsite.com an_unique_tre_chars_namespace`
+
 = Step by Step=
 
 == Create a Virtual Host ==
@@ -25,29 +33,29 @@ mkdir conf
 cd conf/
 cat > httpd.conf <<EOF
 <VirtualHost rmw.ebruni.it:80>
-        DocumentRoot "/www/rmw.ebruni.it/www"
-        ServerName rmw.ebruni.it
-        ServerAdmin info@ebruni.it
-        DirectoryIndex index.mpl index.htm
-        ErrorLog /www/rmw.ebruni.it/logs/error_log
-        CustomLog /www/rmw.ebruni.it/logs/access_log_cmb combined
-        <IfModule mod_perl.c>
-                AddType text/html .mpl
-                PerlSetVar ServerName "rmw.ebruni.it"
-                PerlSetVar MasonErrorMode output 
-                PerlSetVar MasonStaticSource 0
-                <Perl>
-                        use lib '/var/www/rmw.ebruni.it/lib';
-                </Perl>
-                <FilesMatch "\.(htm|mpl|pl)$">
-                        SetHandler  perl-script
-                        PerlHandler Puzzle::MasonHandler
-                </FilesMatch>
-                <LocationMatch "(\.mplcom|handler|\.htt)$|autohandler">
-                        SetHandler  perl-script
-                        PerlInitHandler Apache2::Const::HTTP_NOT_FOUND
+   DocumentRoot "/www/rmw.ebruni.it/www"
+   ServerName rmw.ebruni.it
+   ServerAdmin info@ebruni.it
+   DirectoryIndex index.mpl index.htm
+   ErrorLog /www/rmw.ebruni.it/logs/error_log
+   CustomLog /www/rmw.ebruni.it/logs/access_log_cmb combined
+   <IfModule mod_perl.c>
+      AddType text/html .mpl
+      PerlSetVar ServerName "rmw.ebruni.it"
+      PerlSetVar MasonErrorMode output 
+      PerlSetVar MasonStaticSource 0
+      <Perl>
+         use lib '/var/www/rmw.ebruni.it/lib';
+      </Perl>
+      <FilesMatch "\.(htm|mpl|pl)$">
+         SetHandler  perl-script
+         PerlHandler Puzzle::MasonHandler
+      </FilesMatch>
+      <LocationMatch "(\.mplcom|handler|\.htt|\.yaml)$|autohandler">
+         Order deny,allow 
+         Deny from All
       </LocationMatch>
-        </IfModule>
+   </IfModule>
 </VirtualHost>
 EOF
 }}}
@@ -62,25 +70,6 @@ echo "Hello World" > /www/rmw.ebruni.it/www/index.htm
 }}}
 
 Open browser to http://rmw.ebruni.it/ and it should work.
-
-== Database configuration (Optional)==
-If you configure a database, you have also session support.
-
-{{{
-mysqladmin -p create rmw
-}}}
-{{{
-echo "CREATE TABLE IF NOT EXISTS \`sysSessions\` ( \
-  \`id\` varchar(32) character set latin1 collate latin1_bin NOT NULL, \
-  \`a_session\` text character set latin1 collate latin1_bin, \
-  \`ts\` timestamp NOT NULL default CURRENT_TIMESTAMP, \
-  PRIMARY KEY  (\`id\`) \
-) " | mysql -p rmw
-}}}
-{{{
-echo "GRANT ALL PRIVILEGES ON rmw.* TO  \
- 'rmw'@'localhost' IDENTIFIED BY 'YOUR_PASSWORD'" | mysql -p rmw
-}}}
 
 == Apply Puzzle Configuration ==
 
@@ -137,6 +126,26 @@ cd ../lib
 
 echo -e "package rmw;\n\nour \$puzzle;\nour \$dbh;\n\n1;" > rmw.pm
 }}}
+
+== Database configuration (Optional)==
+If you configure a database, you have also session support.
+
+{{{
+mysqladmin -p create rmw
+}}}
+{{{
+echo "CREATE TABLE IF NOT EXISTS \`sysSessions\` ( \
+  \`id\` varchar(32) character set latin1 collate latin1_bin NOT NULL, \
+  \`a_session\` text character set latin1 collate latin1_bin, \
+  \`ts\` timestamp NOT NULL default CURRENT_TIMESTAMP, \
+  PRIMARY KEY  (\`id\`) \
+) " | mysql -p rmw
+}}}
+{{{
+echo "GRANT ALL PRIVILEGES ON rmw.* TO  \
+ 'rmw'@'localhost' IDENTIFIED BY 'YOUR_PASSWORD'" | mysql -p rmw
+}}}
+
 
 Reload your website and nothing changes apparently but if you have enabled database
 and you take a look in sysSession table you'll see a new record. It's your session.
