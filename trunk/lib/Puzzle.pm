@@ -60,9 +60,9 @@ in your document root, a config.yaml like this
   #traslation:
   #it:           "YourNameSpace::Lang::it"
   #default:      it
-  mail:
-    server:       "your.mail.server"
-    from:         "your@email-address"
+  #mail:
+  #  server:       "your.mail.server"
+  #  from:         "your@email-address"
 
 in your document root, a Mason autohandler file like this
 
