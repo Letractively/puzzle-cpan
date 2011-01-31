@@ -24,9 +24,9 @@ In httpd.conf or virtual host configuration file
       SetHandler  perl-script
       PerlHandler Puzzle::MasonHandler
     </FilesMatch>
-    <LocationMatch "(\.mplcom|handler|\.htt)$|autohandler">
-      SetHandler  perl-script
-      PerlInitHandler Apache2::Const::HTTP_NOT_FOUND
+    <LocationMatch "(\.mplcom|handler|\.htt|\.yaml)$|autohandler">
+      Order deny,allow 
+      Deny from All
     </LocationMatch>
   </IfModule>
 
