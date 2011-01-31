@@ -98,8 +98,8 @@ ls -al ls -al /etc/apache2/mods-enabled/apreq.load
 }}}
 
 
-===Database installation===
-Create a database, update config.yaml with info for accessing db and create the table for storing web sessione
+===Optiona Database installation===
+If you would have database and sessions support,create a database, update config.yaml with info for accessing db and create the table for storing web sessione
 {{{
 CREATE TABLE IF NOT EXISTS `sysSessions` (
   `id` varchar(32) character set latin1 collate latin1_bin NOT NULL,
