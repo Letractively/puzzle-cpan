@@ -37,7 +37,7 @@ print FILE<<"";
 		PerlSetVar MasonErrorMode output 
 		PerlSetVar MasonStaticSource 0
 		<Perl>
-			use lib '/var/www/$website/lib';
+			use lib '/www/$website/lib';
 		</Perl>
 		<FilesMatch "\\.(htm|mpl|pl)\$">
 			SetHandler  perl-script
@@ -109,7 +109,7 @@ open(FILE,">$website/www/autohandler")
 
 print FILE<<EOF;
 <%once>
-	use Puzzle
+	use Puzzle;
 	use $ns;
 </%once>
 
