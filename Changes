@@ -4,6 +4,7 @@ Revision history for Perl extension Puzzle.
 	- Add a script to create folders and files minimum structure
 	- Change httpd.conf documentation to deny access to internal files
 	- In config.yaml mail parameter is now optional.
+	- SessionFake.pm renamed in Session/Fake.pm
 
 0.05  Mon Jan 31 15:21:49 CET 2011
 	- Now database connection is not a mandatory. You can use Puzzle without
