@@ -2,7 +2,8 @@
 
 = Introduction =
 
-Step by step guide to configure an apache virtual host with Puzzle.
+Step by step guide to configure an apache virtual host with Puzzle with database,
+session and pseudo-frames support.
 
 
 = Prerequisites =
@@ -62,7 +63,9 @@ echo "Hello World" > /www/rmw.ebruni.it/www/index.htm
 
 Open browser to http://rmw.ebruni.it/ and it should work.
 
-== Database configuration ==
+== Database configuration (Optional)==
+If you configure a database, you have also session support.
+
 {{{
 mysqladmin -p create rmw
 }}}
@@ -100,31 +103,33 @@ keywords:          ""
 debug:             1
 cache:             0
 db:
+  enabled:                1
+  persistent_connection:  0
   username:               rmw
   password:               YOUR_PASSWORD
   host:                   localhost
   name:                   rmw
   session_table:          sysSessions
-  persistent_connection:  0
 mail:
   server:       "YOUR.SMTP.SERVER"
   from:         "YOUR@EMAIL.COM"
 EOF
 }}}
 
+If you don't need database you can set db.enabled = 0 and remove other settings.
+
 {{{
 echo -e "\
 <%once>\n\
-\tuse Puzzle::Core;\n\
+\tuse Puzzle;\n\
 \tuse rmw;\n\
 </%once>\n\
 \n\
 <%init>\n\
-\t\$rmw::puzzle ||= new Puzzle::Core(cfg_path => \$m->interp->comp_root\n\
+\t\$rmw::puzzle ||= new Puzzle(cfg_path => \$m->interp->comp_root\n\
 \t\t.  '/config.yaml');\n\
 \t\$rmw::dbh = \$rmw::puzzle->dbh;\n\
 \t\$rmw::puzzle->process_request;\n\
-\t\$rmw::puzzle->dbh->storage->disconnect;\n\
 </%init>" > autohandler
 }}}
 {{{
@@ -133,7 +138,8 @@ cd ../lib
 echo -e "package rmw;\n\nour \$puzzle;\nour \$dbh;\n\n1;" > rmw.pm
 }}}
 
-Reload your website and nothing changes apparently but if you take a look in sysSession table you'll see a new record. It's your session.
+Reload your website and nothing changes apparently but if you have enabled database
+and you take a look in sysSession table you'll see a new record. It's your session.
 
 =Do something more funny=
 
@@ -177,7 +183,7 @@ base.htt
         <script type="text/javascript" src="/js/debug.js"></script>
 </tmpl_if>
 <style>
-#frame_top              {background-color: #6AD96A }
+#frame_top      {background-color: #6AD96A }
 #frame_center   {background-color: #F2C676 }
 #frame_bottom   {background-color: #C291D6 }
 #frame_debug    {margin-top: 40px }
