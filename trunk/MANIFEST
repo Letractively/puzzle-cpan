@@ -17,7 +17,6 @@ lib/Puzzle/Post.pm
 lib/Puzzle/MasonHandler.pm
 lib/Puzzle/Sendmail.pm  
 lib/Puzzle/Session.pm   
-lib/Puzzle/SessionFake.pm   
 lib/Puzzle/Utility.pm
 lib/Puzzle/Block.pm  
 lib/Puzzle/Core.pm    
@@ -32,3 +31,4 @@ lib/Puzzle/Lang/Manager.pm
 lib/Puzzle/Sendmail/MultiPartItem.pm
 lib/Puzzle/Session/Auth.pm
 lib/Puzzle/Session/User.pm
+lib/Puzzle/Session/Fake.pm   
