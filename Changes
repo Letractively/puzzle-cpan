@@ -1,5 +1,8 @@
 Revision history for Perl extension Puzzle.
 
+0.06
+	- Add a script to create folders and files minimum structure
+
 0.05  Mon Jan 31 15:21:49 CET 2011
 	- Now database connection is not a mandatory. You can use Puzzle without
 		a database connection configure db.enabled new config.yaml parameter
