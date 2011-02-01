@@ -1,6 +1,6 @@
 Revision history for Perl extension Puzzle.
 
-0.06
+0.06  Mon Jan 31 19:55:52 CET 2011
 	- Add a script to create folders and files minimum structure
 	- Change httpd.conf documentation to deny access to internal files
 	- In config.yaml mail parameter is now optional.
