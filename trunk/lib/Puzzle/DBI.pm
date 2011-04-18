@@ -46,13 +46,14 @@ of primary keys and value is an hashref with record elements
 sub rs2hash {
 	my $self	= shift;
     my $rs      = shift;
+	my $include_columns = shift;
 	my $ret		= {};
 	my @pk		= $rs->result_source->primary_columns;
 	while (my $row = $rs->next) {
 		my $key = scalar(@pk) == 1
 					? $row->get_column($pk[0]) . ''
 					: join('-',map {$row->$_} @pk);
-		$ret->{$key} = $self->row2hash($row);
+		$ret->{$key} = $self->row2hash($row,$include_columns);
 	}
 	return $ret;
 }
