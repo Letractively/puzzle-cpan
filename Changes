@@ -1,5 +1,8 @@
 Revision history for Perl extension Puzzle.
 
+0.09
+	- Add rs2hash() that return an hashref where every key is the primary key value or a contatenation of primary keys and value is an hashref with record elements
+	- Now row2hash and rs2aoh has a new optional parameter to include virtual or aliases columns
 
 0.08  Sun Mar 13 22:40:56 CET 2011
 	- Remove class Puzzle::Loader. Included its functions in Puzzle::DBI.
