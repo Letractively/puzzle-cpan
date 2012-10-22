@@ -12,7 +12,8 @@ sub new {
 	my $dsn = shift;
 	my $user = shift;
 	my $password = shift;
-    my $s       = DBIx::Class::Schema::Loader->connect($dsn,$user,$password);
+    	my $schema  = shift || 'DBIx::Class::Schema::Loader';
+    my $s       = $schema->connect($dsn,$user,$password);
     bless $s, $class;
     return $s;
 }
