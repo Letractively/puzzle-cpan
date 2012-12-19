@@ -1,0 +1,6 @@
+To Do List for Puzzle Module
+============================
+
+- Use Module::Build to build Build.PL & Makefile.PL (see HTML::Mason)
+- Check apxs(2) presence
+- Check mod_perl or mod_perl 2 (see HTML::Mason Build.PL)
