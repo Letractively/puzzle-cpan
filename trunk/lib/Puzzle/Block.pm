@@ -1,6 +1,6 @@
 package Puzzle::Block;
 
-our $VERSION = '0.11';
+our $VERSION = '0.17';
 
 use Params::Validate qw(:types);
 use base 'Class::Container';
