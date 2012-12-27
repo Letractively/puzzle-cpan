@@ -1,5 +1,8 @@
 Revision history for Perl extension Puzzle.
 
+0.17
+	- Fix a static error code. Now Puzzle::Exception used.
+
 0.16 Fri Dec 21 12:02:43 CET 2012
     - Some optimization in building parameters for template
 	- Puzzle::Args::set now accept only permitted structure (scalar, hashref,...)
