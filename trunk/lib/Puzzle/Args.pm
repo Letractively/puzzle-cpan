@@ -1,6 +1,6 @@
 package Puzzle::Args;
 
-our $VERSION = '0.17';
+our $VERSION = '0.18';
 
 use Params::Validate qw(:types);;
 
@@ -46,21 +46,29 @@ sub set {
 	} elsif (ref($key) eq '') {
 		my $value	= shift;
 		if (blessed($value) && $value->isa('DBIx::Class::ResultSet')) {
-			my $array 	= $self->container->tmpl->dcc->resultset($value,$key);
+			my $relship = shift || {};
+			my $array 	= $self->container->tmpl->dcc->resultset($value,$key,$relship);
 			$self->set($array);
 		} else {
 			$self->{args}->{$key} = $value;
 		}
 	} elsif (blessed($key) && $key->isa('DBIx::Class::ResultSet')) {
-		my $array 	= $self->container->tmpl->dcc->resultset($key);
+		my $relship = shift || {};
+		my $array 	= $self->container->tmpl->dcc->resultset($key,undef,$relship);
 		$self->set($array);
 	} elsif (blessed($key) && $key->isa('DBIx::Class::Row')) {
-		$hashref	= $self->container->tmpl->dcc->row($key);
+		my $relship = shift || {};
+		$hashref	= $self->container->tmpl->dcc->row($key,$relship);
 		$self->set($hashref);
 	} else {
 		die "Unknown structure to set: " . ref($key) . ' - ' . Data::Dumper::Dumper($key);
 	}
 	return $self->{args}->{$key};
+}
+
+sub clear {
+	my $self	= shift;
+	$self->{args} = {};
 }
 
 sub __push_hashref {

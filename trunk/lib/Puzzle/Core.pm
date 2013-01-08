@@ -1,6 +1,6 @@
 package Puzzle::Core;
 
-our $VERSION = '0.14';
+our $VERSION = '0.18';
 
 use 5.008008;
 use strict;
@@ -102,7 +102,12 @@ sub _autohandler_once {
 sub process_request{
 	my $self	= shift;
 	my $html;
+
+	local $Puzzle::Core::instance = $self;
+
 	&_mason->apache_req->no_cache(1);
+	$self->post->clear;
+	$self->args->clear;
 	$self->post->_set({$self->_mason->request_args});
 	$self->session->load;
 	# enable always debug for debug users

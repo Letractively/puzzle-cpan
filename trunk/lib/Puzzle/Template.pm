@@ -340,12 +340,12 @@ sub _ext_datetime2human {
 }
 
 sub _ext_isgid {
-	return $self->container->session->user->isGid(shift);
+	return Puzzle->instance->session->user->isGid(shift);
 }
 
 
 sub _ext_s {
-	return $self->container->lang->s(shift);
+	return Puzzle->instance->lang->s(shift);
 }
 
 sub _split_date {
