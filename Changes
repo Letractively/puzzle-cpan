@@ -1,6 +1,8 @@
 Revision history for Perl extension Puzzle.
 
 0.18
+	- db is now an alias for dbh
+	- Rename Puzzle::Template::DBIxClassConverter into Puzzle::DBIx::ClassConverter
 	- Now it's possible to select which DBIx::Class relationship to add automatically to args
 	- Solved a bug in Args and Post
     - Add a global static instance method to retrieve current Puzzle instance from outside components.

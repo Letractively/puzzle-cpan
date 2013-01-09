@@ -7,15 +7,15 @@ use base qw(Class::Container HTML::Template::Pro::Extension);
 use File::Spec;
 use Params::Validate qw(:types);
 
-use Puzzle::Template::DBIxClassConverter;
+use Puzzle::DBIx::ClassConverter;
 
 
 __PACKAGE__->valid_params(
-	dcc					=> { isa	=> 'Puzzle::Template::DBIxClassConverter'} ,
+	dcc					=> { isa	=> 'Puzzle::DBIx::ClassConverter'} ,
 );
 
 __PACKAGE__->contained_objects (
-	dcc		=> 'Puzzle::Template::DBIxClassConverter',
+	dcc		=> 'Puzzle::DBIx::ClassConverter',
 );
 
 use HTML::Mason::MethodMaker(

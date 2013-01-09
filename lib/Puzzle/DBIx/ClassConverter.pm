@@ -1,6 +1,6 @@
-package Puzzle::Template::DBIxClassConverter;
+package Puzzle::DBIx::ClassConverter;
 
-our $VERSION = '0.17';
+our $VERSION = '0.18';
 
 use base 'Class::Container';
 

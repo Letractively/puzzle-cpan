@@ -52,6 +52,8 @@ use HTML::Mason::MethodMaker(
 	]
 );
 
+*db = \&dbh;
+
 sub new {
 	my $class 	= shift;
 	# append parameters required for new contained objects loading them
