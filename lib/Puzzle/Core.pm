@@ -15,28 +15,30 @@ use Params::Validate qw(:types);
 use base 'Class::Container';
 
 __PACKAGE__->valid_params(
-	cfg_path			=> { parse 	=> 'string', type => SCALAR},
-	session				=> { isa 		=> 'Puzzle::Session', optional => 1 },
-	lang_manager	=> { isa 		=> 'Puzzle::Lang::Manager' },
+	cfg_path				=> { parse 	=> 'string', type => SCALAR},
+	session					=> { isa 		=> 'Puzzle::Session', optional => 1 },
+	lang_manager			=> { isa 		=> 'Puzzle::Lang::Manager' },
 	cfg						=> { isa 		=> 'Puzzle::Config'} ,
 	tmpl					=> { isa 		=> 'Puzzle::Template'} ,
 	dbg						=> { isa 		=> 'Puzzle::Debug'} ,
 	args					=> { isa 		=> 'Puzzle::Args'} ,
 	post					=> { isa 		=> 'Puzzle::Post'} ,
 	sendmail				=> { isa 		=> 'Puzzle::Sendmail'} ,
+	crud					=> { isa 		=> 'Puzzle::DBIx::Crud'} ,
 	exception				=> { isa 		=> 'Puzzle::Exception'} ,
 );
 
 __PACKAGE__->contained_objects (
-	session    		=> {class => 'Puzzle::Session', delayed => 1},
-	lang_manager	=> 'Puzzle::Lang::Manager',
+	session    				=> {class => 'Puzzle::Session', delayed => 1},
+	lang_manager			=> 'Puzzle::Lang::Manager',
 	cfg						=> 'Puzzle::Config',
 	tmpl					=> 'Puzzle::Template',
 	dbg						=> 'Puzzle::Debug',
 	args					=> 'Puzzle::Args',
 	post					=> 'Puzzle::Post',
 	page					=> {class => 'Puzzle::Page', delayed => 1},
-	sendmail			=> 'Puzzle::Sendmail',
+	sendmail				=> 'Puzzle::Sendmail',
+	crud					=> 'Puzzle::DBIx::Crud',
 	exception				=> 'Puzzle::Exception',
 );
 
@@ -44,7 +46,7 @@ __PACKAGE__->contained_objects (
 # all new valid_params are read&write methods
 use HTML::Mason::MethodMaker(
 	read_only 		=> [ qw(cfg_path dbh tmpl lang_manager lang dbg args page 
-		sendmail post exception) ],
+		sendmail post exception crud) ],
 	read_write		=> [ 
 		[ cfg 			=> __PACKAGE__->validation_spec->{'cfg'} ],
 		[ session		=> __PACKAGE__->validation_spec->{'session'} ],
