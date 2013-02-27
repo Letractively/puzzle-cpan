@@ -368,7 +368,21 @@ sub _split_date {
 	@ret = map(length($_) == 1 ? "0$_" :  $_,@ret);
 	return @ret;
 }
-	
+
+sub combo_selected {
+	my $s			= shift;
+	my $arraylist	= shift;
+	my $keyname		= shift;
+	my $vselected	= shift;
+
+	LOOP: foreach (@$arraylist) {
+		if ($_->{$keyname} eq $vselected) {
+			$_->{selected} = 'selected';
+			last LOOP;
+		}
+	}
+}
+
 1;
 
 # vim: set ts=2:
