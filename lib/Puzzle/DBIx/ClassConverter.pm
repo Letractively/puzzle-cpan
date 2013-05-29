@@ -41,6 +41,8 @@ sub row {
 				} else {
 					%ret = (%ret,%{$self->resultset($rrow,undef,$relsphip->{$rel})});
 				}
+			} elsif ($rrow && $rrow->isa('DBIx::Class::Row')) {
+				%ret = (%ret,%{$self->row($rrow)});
 			}
 		}
 	}
