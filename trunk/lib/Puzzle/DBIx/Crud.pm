@@ -93,7 +93,11 @@ sub op_u {
 	my @columns = $rec->result_source->columns;
 	my %rec_updates;
 	my $args	= $puzzle->post->{args};
-	@rec_updates{@columns} = @$args{@columns};
+	foreach (@columns) {
+		if (exists $args{$_}) {
+			$rec_updates{$_} = $args{$_};
+		}
+	}
 
 	$rr->{rec_updates} = \%rec_updates;
 
