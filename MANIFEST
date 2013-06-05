@@ -15,6 +15,7 @@ lib/Puzzle/Exception.pm
 lib/Puzzle/Debug.pm
 lib/Puzzle/Post.pm
 lib/Puzzle/MasonHandler.pm
+lib/Puzzle/Null.pm
 lib/Puzzle/Sendmail.pm
 lib/Puzzle/Session.pm
 lib/Puzzle/Utility.pm

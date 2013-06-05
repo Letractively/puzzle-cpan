@@ -9,6 +9,7 @@ use warnings;
 use YAML qw(LoadFile);
 use Puzzle::Config;
 use Puzzle::DBI;
+use Puzzle::Null;
 use HTML::Mason::Request;
 use Log::Any;
 use Log::Any::Adapter;
@@ -82,6 +83,8 @@ sub _init {
 	if ($self->cfg->debug_path) {
 		Log::Any::Adapter->set(File => $self->cfg->debug_path);
 		$self->{log} = Log::Any->get_logger();
+	} else {
+		$self->{log} = Puzzle::Null->new;
 	}
 	# inizializzazione classi delayed
 	my $center_class = 'Puzzle::Block';
@@ -130,8 +133,10 @@ sub process_request{
 	$self->_login_logout;
 	$self->page->process;
 	if ($self->page->center->direct_output) {
+		#$self->log->debug(( caller(0) )[3] . ": Print page WITHOUT frames");
 		$html	= $self->page->center->html;
 	} else {
+		#$self->log->debug(( caller(0) )[3] . ": Print page with frames");
 		my $args = {
 			frame_bottom		=> $self->page->bottom->body,
 			frame_left			=> $self->page->left->body,
