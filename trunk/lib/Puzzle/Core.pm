@@ -10,6 +10,8 @@ use YAML qw(LoadFile);
 use Puzzle::Config;
 use Puzzle::DBI;
 use HTML::Mason::Request;
+use Log::Any;
+use Log::Any::Adapter;
 
 use Params::Validate qw(:types);
 use base 'Class::Container';
@@ -63,7 +65,7 @@ sub new {
 	my $cfgH		= LoadFile($_[1]);
 	my @params	= qw(frames base frame_bottom_file frame_left_file frame_top_file exception_file
 										frame_right_file gids login description keywords db
-										namespace debug cache auth_class traslation mail page);
+										namespace debug debug_path cache auth_class traslation mail page);
 	foreach (@params){
 		push @_, ($_, $cfgH->{$_}) if (exists $cfgH->{$_});
 	}
@@ -76,7 +78,11 @@ sub new {
 
 sub _init {
 	my $self	= shift;
-	
+
+	if ($self->cfg->debug_path) {
+		Log::Any::Adapter->set(File => $self->cfg->debug_path);
+		$self->{log} = Log::Any->get_logger();
+	}
 	# inizializzazione classi delayed
 	my $center_class = 'Puzzle::Block';
 	if ($self->cfg->page) {
@@ -157,6 +163,11 @@ sub _login_logout {
 
 sub _mason  {
 	return HTML::Mason::Request->instance();
+}
+
+sub log {
+	my $s	= shift;
+	return $s->{log};
 }
 
 
