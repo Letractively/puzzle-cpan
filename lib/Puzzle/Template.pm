@@ -1,6 +1,6 @@
 package Puzzle::Template;
 
-our $VERSION = '0.15';
+our $VERSION = '0.18';
 
 use base qw(Class::Container HTML::Template::Pro::Extension);
 
@@ -141,6 +141,7 @@ use Switch;
 use Data::Dumper;
 use JSON::Any;
 use XML::Simple;
+use Text::CSV::Slurp;
 
 sub printct {
 		print $_[0]->sprintct($_[1], $_[2]);
@@ -160,6 +161,7 @@ sub sprintct {
 		my $pl2text = sub { return Data::Dumper::Dumper($_[0]) };
 		my $pl2json = sub { my $obj =  JSON::Any->new; return $obj->objToJson($_[0]) };
 		my $pl2xml 	= sub { return XMLout($_[0]) };
+		my $pl2csv  = sub { return Text::CSV::Slurp->create(input => $_[0],sep_char => ';') };
 		my $pl2else = sub { return Data::Dumper::Dumper($_[0]) };
 
 		my $fc;
@@ -167,9 +169,10 @@ sub sprintct {
 		switch ($ct) {
 			case /json/					{ $fc = $pl2json}
 			case /xml/ 					{ $fc = $pl2xml}
-		  case 'text/plain' 	{ $fc = $pl2text}
-		  case 'text/html' 		{ $fc = $pl2html}
-		  else 								{ $fc = $pl2else}
+			case 'text/plain' 			{ $fc = $pl2text}
+			case 'text/html' 			{ $fc = $pl2html}
+			case /excel/				{ $fc = $pl2csv}
+			else 						{ $fc = $pl2else}
 		}
 
 		return &$fc($pl);
