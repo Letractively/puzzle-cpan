@@ -2,6 +2,7 @@ Revision history for Perl extension Puzzle.
 
 0.20
 	- Solved a problem in Args filter when value is a Resultset
+	- Solved a bug in Crud which not save changes while updating a resultset
 
 0.19 Tue Sep 10 17:06:24 CEST 2013
 	- Add dependence for Log::Any::Adapter
