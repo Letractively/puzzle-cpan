@@ -73,6 +73,7 @@ sub op_C {
 
 	$rr->{rec_updates} = \%rec_updates;
 
+	$s->_call_callback($cbs,"defaults", $rr, $opt);
 	$s->_call_callback($cbs,"pre_C", $rr, $opt);
 	$rr->{rec} = $source->resultset->create($rr->{rec_updates});
 	$s->_call_callback($cbs,"post_C", $rr, $opt);
@@ -101,6 +102,7 @@ sub op_u {
 
 	$rr->{rec_updates} = \%rec_updates;
 
+	$s->_call_callback($cbs,"defaults", $rr, $opt);
 	$s->_call_callback($cbs,"pre_u", $rr, $opt);
 	$rr->{rec} = $rec->update($rr->{rec_updates});
 	$s->_call_callback($cbs,"post_u", $rr, $opt);

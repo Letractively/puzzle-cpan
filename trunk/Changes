@@ -5,6 +5,8 @@ Revision history for Perl extension Puzzle.
 	- Sync Crud with changes in relationship introduced in 0.18
 	- Solved a problem in Args filter when value is a Resultset
 	- Solved a bug in Crud which not save changes while updating a resultset
+	- In Crud.pm now default callback is called also when create and update records
+	- Add a linkback parameter passed to exception template file
 
 0.19 Tue Sep 10 17:06:24 CEST 2013
 	- Add dependence for Log::Any::Adapter
