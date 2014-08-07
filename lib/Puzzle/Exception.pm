@@ -21,7 +21,7 @@ sub raise {
 	if (-e $yaml_path) {
 		my $lang = $self->container->lang_manager->lang;
 		my $yaml_args = $tmpl->yamlArgs($yaml_path,$lang);
-		foreach (qw/cod descr/) {
+		foreach (qw/cod descr linkback/) {
 			if (exists $yaml_args->{exception}->{$error_code}->{$_}) {
 				$self->container->args->set('exception.'. $_ =>
 				$yaml_args->{exception}->{$error_code}->{$_});
