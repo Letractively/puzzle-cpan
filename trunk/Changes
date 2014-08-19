@@ -1,7 +1,7 @@
 Revision history for Perl extension Puzzle.
 
 
-0.20
+0.20 Wed Jul 09 15:34:00 CEST 2013
 	- Sync Crud with changes in relationship introduced in 0.18
 	- Solved a problem in Args filter when value is a Resultset
 	- Solved a bug in Crud which not save changes while updating a resultset
