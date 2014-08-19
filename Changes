@@ -1,6 +1,10 @@
 Revision history for Perl extension Puzzle.
 
 
+0.21
+	- Add MasonErrorMode and MasonStaticSource to MasonHandler.pm to control Mason behaviour via httpd.conf
+
+
 0.20 Wed Jul 09 15:34:00 CEST 2013
 	- Sync Crud with changes in relationship introduced in 0.18
 	- Solved a problem in Args filter when value is a Resultset
