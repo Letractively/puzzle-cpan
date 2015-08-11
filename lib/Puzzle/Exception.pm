@@ -1,6 +1,6 @@
 package Puzzle::Exception;
 
-our $VERSION = '0.17';
+our $VERSION = '0.21';
 
 use base 'Class::Container';
 use File::Spec;
